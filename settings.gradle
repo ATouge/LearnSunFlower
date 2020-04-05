@@ -1,0 +1,2 @@
+rootProject.name='LearnSunFlower'
+include ':app'
