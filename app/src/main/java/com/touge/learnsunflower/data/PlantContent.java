@@ -27,7 +27,7 @@ class PlantContent {
 
     private static void addItem(Plant plant) {
         ITEMS.add(plant);
-        ITEM_MAP.put(plant.getId(), plant);
+        ITEM_MAP.put(plant.getPlantId(), plant);
     }
 
 }

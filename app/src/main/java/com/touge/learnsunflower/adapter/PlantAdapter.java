@@ -2,7 +2,6 @@ package com.touge.learnsunflower.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +33,14 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
         public void onClick(View view) {
             Plant item = (Plant) view.getTag();
             if (isTwoPane) {
-                PlantDetailFragment fragment = PlantDetailFragment.newInstance(item.getId());
+                PlantDetailFragment fragment = PlantDetailFragment.newInstance(item.getPlantId());
                 mParentActivity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.plant_detail_container, fragment)
                         .commit();
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, PlantDetailActivity.class);
-                intent.putExtra(PlantDetailFragment.ARG_ITEM_ID, item.getId());
+                intent.putExtra(PlantDetailFragment.ARG_ITEM_ID, item.getPlantId());
 
                 context.startActivity(intent);
             }
@@ -68,7 +67,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mIdView.setText(mValues.get(position).getId());
+        holder.mIdView.setText(mValues.get(position).getPlantId());
         holder.mContentView.setText(mValues.get(position).getName());
         holder.itemView.setTag(mValues.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);

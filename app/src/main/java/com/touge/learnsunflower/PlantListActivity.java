@@ -6,7 +6,9 @@ import android.view.View;
 import com.google.android.material.snackbar.Snackbar;
 import com.touge.learnsunflower.adapter.PlantAdapter;
 import com.touge.learnsunflower.databinding.ActivityPlantListBinding;
+import com.touge.learnsunflower.utilities.InjectorUtils;
 import com.touge.learnsunflower.viewmodel.PlantListViewModel;
+import com.touge.learnsunflower.viewmodel.PlantListViewModelFactory;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +46,9 @@ public class PlantListActivity extends AppCompatActivity {
             isTwoPane = true;
         }
 
-        PlantListViewModel plantListViewModel = new ViewModelProvider(this)
+        PlantListViewModelFactory factory = InjectorUtils
+                .providePlantListViewModelFactory(getApplication());
+        PlantListViewModel plantListViewModel = new ViewModelProvider(this, factory)
                 .get(PlantListViewModel.class);
         subscribeUi(plantListViewModel);
     }

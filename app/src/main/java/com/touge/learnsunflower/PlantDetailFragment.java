@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.touge.learnsunflower.data.Plant;
 import com.touge.learnsunflower.databinding.FragmentPlantDetailBinding;
+import com.touge.learnsunflower.utilities.InjectorUtils;
 import com.touge.learnsunflower.viewmodel.PlantDetailViewModel;
+import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,7 +49,8 @@ public class PlantDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         String plantId = getArguments().getString(ARG_ITEM_ID);
 
-        PlantDetailViewModel.Factory factory = new PlantDetailViewModel.Factory(plantId);
+        PlantDetailViewModelFactory factory = InjectorUtils
+                .providePlantDetailViewModelFactory(getActivity().getApplication(), plantId);
         PlantDetailViewModel viewModel = new ViewModelProvider(this, factory)
                 .get(PlantDetailViewModel.class);
         subscribeToModel(viewModel);
