@@ -2,6 +2,7 @@ package com.touge.learnsunflower.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,22 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
             Plant item = (Plant) view.getTag();
-            Context context = view.getContext();
-            Intent intent = new Intent(context, PlantDetailActivity.class);
-            intent.putExtra(PlantDetailFragment.ARG_ITEM_ID, item.id);
+            if (isTwoPane) {
+                Bundle arguments = new Bundle();
+                arguments.putString(PlantDetailFragment.ARG_ITEM_ID, item.id);
+                PlantDetailFragment fragment = new PlantDetailFragment();
+                fragment.setArguments(arguments);
+                mParentActivity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.plant_detail_container, fragment)
+                        .commit();
+            } else {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, PlantDetailActivity.class);
+                intent.putExtra(PlantDetailFragment.ARG_ITEM_ID, item.id);
 
-            context.startActivity(intent);
+                context.startActivity(intent);
+            }
+
         }
     };
 

@@ -38,9 +38,10 @@ public class PlantListActivity extends AppCompatActivity {
             }
         });
 
-//        if (binding.plantListFrame.plantDetailContainer != null) {
-//
-//        }
+        if (binding.plantListFrame.plantDetailContainer != null) {
+
+            isTwoPane = true;
+        }
 
         setupRecyclerView(binding.plantListFrame.plantList);
     }
