@@ -34,17 +34,14 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
         public void onClick(View view) {
             Plant item = (Plant) view.getTag();
             if (isTwoPane) {
-                Bundle arguments = new Bundle();
-                arguments.putString(PlantDetailFragment.ARG_ITEM_ID, item.id);
-                PlantDetailFragment fragment = new PlantDetailFragment();
-                fragment.setArguments(arguments);
+                PlantDetailFragment fragment = PlantDetailFragment.newInstance(item.getId());
                 mParentActivity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.plant_detail_container, fragment)
                         .commit();
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, PlantDetailActivity.class);
-                intent.putExtra(PlantDetailFragment.ARG_ITEM_ID, item.id);
+                intent.putExtra(PlantDetailFragment.ARG_ITEM_ID, item.getId());
 
                 context.startActivity(intent);
             }
@@ -71,8 +68,8 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).name);
+        holder.mIdView.setText(mValues.get(position).getId());
+        holder.mContentView.setText(mValues.get(position).getName());
         holder.itemView.setTag(mValues.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
     }

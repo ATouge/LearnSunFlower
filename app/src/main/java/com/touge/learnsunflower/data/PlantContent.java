@@ -10,13 +10,13 @@ import java.util.Map;
  * @Date 2020/4/5 9:18
  * @Description
  */
-public class PlantContent {
+class PlantContent {
 
     private static final int NUM_ITEMS = 4;
 
-    public static final List<Plant> ITEMS = new ArrayList<>(NUM_ITEMS);
+    static final List<Plant> ITEMS = new ArrayList<>(NUM_ITEMS);
 
-    public static final Map<String, Plant> ITEM_MAP = new HashMap<>(NUM_ITEMS);
+    static final Map<String, Plant> ITEM_MAP = new HashMap<>(NUM_ITEMS);
 
     static {
         addItem(new Plant("1", "Apple", "A red fruit"));
@@ -27,7 +27,7 @@ public class PlantContent {
 
     private static void addItem(Plant plant) {
         ITEMS.add(plant);
-        ITEM_MAP.put(plant.id, plant);
+        ITEM_MAP.put(plant.getId(), plant);
     }
 
 }

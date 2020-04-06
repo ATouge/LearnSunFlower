@@ -44,11 +44,8 @@ public class PlantDetailActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            Bundle bundle = new Bundle();
-            bundle.putString(PlantDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID));
-            PlantDetailFragment fragment = new PlantDetailFragment();
-            fragment.setArguments(bundle);
+            String plantId = getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID);
+            PlantDetailFragment fragment =PlantDetailFragment.newInstance(plantId);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.plant_detail_container, fragment)
                     .commit();

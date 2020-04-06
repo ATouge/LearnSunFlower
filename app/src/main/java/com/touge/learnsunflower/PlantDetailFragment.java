@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.touge.learnsunflower.data.Plant;
-import com.touge.learnsunflower.data.PlantContent;
 import com.touge.learnsunflower.databinding.FragmentPlantDetailBinding;
+import com.touge.learnsunflower.viewmodel.PlantDetailViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * @Author Touge
@@ -32,17 +33,24 @@ public class PlantDetailFragment extends Fragment {
     public PlantDetailFragment() {
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItem = PlantContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+    public static PlantDetailFragment newInstance(String plantId) {
 
-            CollapsingToolbarLayout toolbarLayout = getActivity().findViewById(R.id.toolbar_layout);
-            if (toolbarLayout != null) {
-                toolbarLayout.setTitle(mItem.name);
-            }
-        }
+        Bundle args = new Bundle();
+        args.putString(ARG_ITEM_ID, plantId);
+        PlantDetailFragment fragment = new PlantDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        String plantId = getArguments().getString(ARG_ITEM_ID);
+
+        PlantDetailViewModel.Factory factory = new PlantDetailViewModel.Factory(plantId);
+        PlantDetailViewModel viewModel = new ViewModelProvider(this, factory)
+                .get(PlantDetailViewModel.class);
+        subscribeToModel(viewModel);
     }
 
     @Nullable
@@ -51,10 +59,18 @@ public class PlantDetailFragment extends Fragment {
         mBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_plant_detail, container, false);
 
-        if (mItem != null) {
-            mBinding.plantDetail.setText(mItem.details);
-        }
-
         return mBinding.getRoot();
+    }
+
+    private void subscribeToModel(PlantDetailViewModel viewModel) {
+        viewModel.getPlant().observe(this, this::updateUi);
+    }
+
+    private void updateUi(Plant plant) {
+        mBinding.plantDetail.setText(plant.getDescription());
+        CollapsingToolbarLayout toolbarLayout = getActivity().findViewById(R.id.toolbar_layout);
+        if (toolbarLayout != null) {
+            toolbarLayout.setTitle(plant.getName());
+        }
     }
 }

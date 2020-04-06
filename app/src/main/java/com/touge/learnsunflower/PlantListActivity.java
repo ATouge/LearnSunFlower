@@ -5,13 +5,13 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.touge.learnsunflower.adapter.PlantAdapter;
-import com.touge.learnsunflower.data.PlantContent;
 import com.touge.learnsunflower.databinding.ActivityPlantListBinding;
+import com.touge.learnsunflower.viewmodel.PlantListViewModel;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * @Author Touge
@@ -21,11 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PlantListActivity extends AppCompatActivity {
 
     private boolean isTwoPane;
+    private ActivityPlantListBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityPlantListBinding binding = DataBindingUtil.setContentView(this,
+        binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_plant_list);
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(getTitle());
@@ -33,8 +34,8 @@ public class PlantListActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v,"TODO: Add new plant to plant list",Snackbar.LENGTH_SHORT)
-                        .setAction("Action",null).show();
+                Snackbar.make(v, "TODO: Add new plant to plant list", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
             }
         });
 
@@ -43,11 +44,18 @@ public class PlantListActivity extends AppCompatActivity {
             isTwoPane = true;
         }
 
-        setupRecyclerView(binding.plantListFrame.plantList);
+        PlantListViewModel plantListViewModel = new ViewModelProvider(this)
+                .get(PlantListViewModel.class);
+        subscribeUi(plantListViewModel);
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setAdapter(new PlantAdapter(this,
-                PlantContent.ITEMS, isTwoPane));
+    private void subscribeUi(PlantListViewModel viewModel) {
+        viewModel.getPlants().observe(this, plants -> {
+            if (plants != null) {
+                PlantAdapter plantAdapter = new PlantAdapter(this,
+                        plants, isTwoPane);
+                binding.plantListFrame.plantList.setAdapter(plantAdapter);
+            }
+        });
     }
 }
