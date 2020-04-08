@@ -1,5 +1,3 @@
-@file:JvmName("AppExecutors")
-
 package com.touge.learnsunflower.utilities
 
 import java.util.concurrent.Executors
@@ -14,7 +12,7 @@ import java.util.concurrent.Executors
 
 private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
 
-fun runOnIoThread(f: Runnable) {
+fun runOnIoThread(f: () -> Unit) {
     IO_EXECUTOR.execute(f)
 }
 

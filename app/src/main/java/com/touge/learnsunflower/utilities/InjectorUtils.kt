@@ -12,8 +12,8 @@ import com.touge.learnsunflower.viewmodel.PlantListViewModelFactory
  * @Description 静态类：提供 ViewModelFactory
  */
 object InjectorUtils {
-    private fun provideRepository(application: Application): PlantRepository {
-        return PlantRepository.getInstance(AppDatabase.getAppDatabase(application))
+    private fun provideRepository(application: Application):PlantRepository {
+        return PlantRepository.getInstance(AppDatabase.getInstance(application).plantDao())
     }
 
     @JvmStatic

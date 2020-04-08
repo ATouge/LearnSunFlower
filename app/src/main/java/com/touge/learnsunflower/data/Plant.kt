@@ -16,7 +16,8 @@ data class Plant(
         @ColumnInfo(name = "id")
         val plantId: String,
         val name: String,
-        val description: String
+        val description: String,
+        val growZoneNumber: Int
 ) {
     override fun toString() = name
 }
