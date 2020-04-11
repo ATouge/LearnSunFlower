@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.DrawableTransformation;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.touge.learnsunflower.data.Plant;
 import com.touge.learnsunflower.databinding.FragmentPlantDetailBinding;
@@ -74,6 +78,14 @@ public class PlantDetailFragment extends Fragment {
         CollapsingToolbarLayout toolbarLayout = getActivity().findViewById(R.id.toolbar_layout);
         if (toolbarLayout != null) {
             toolbarLayout.setTitle(plant.getName());
+        }
+
+        ImageView imageView = getActivity().findViewById(R.id.detail_image);
+        if (imageView != null && !plant.getImageUrl().isEmpty()) {
+            Glide.with(this)
+                    .load(plant.getImageUrl())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageView);
         }
     }
 }

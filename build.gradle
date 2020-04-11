@@ -19,7 +19,7 @@ buildscript {
         lifecycleVersion = '2.2.0'
         roomVersion = '2.2.0'
         databindingVersion = '3.1.4'
-
+        glideVersion = '4.11.0'
     }
 
     repositories {
