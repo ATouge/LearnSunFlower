@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import com.touge.learnsunflower.adapter.PlantAdapter
 import com.touge.learnsunflower.databinding.ActivityPlantListBinding
 import com.touge.learnsunflower.utilities.InjectorUtils
@@ -39,11 +38,6 @@ class PlantListActivity : AppCompatActivity() {
 
         binding.run {
             toolbar.title = title
-            fab.setOnClickListener { view ->
-                Snackbar.make(view, "TODO: Add new plant to plant list", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .show()
-            }
         }
 
         if (binding.plantListFrame.plantDetailContainer != null) {
