@@ -3,6 +3,7 @@ package com.touge.learnsunflower.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 /**
  * @Author Touge
@@ -18,7 +19,18 @@ data class Plant(
         val name: String,
         val description: String,
         val growZoneNumber: Int,
+        // 浇水间隔，单位：天 默认是7天
+        val waterInterval: Int = 7,
         val imageUrl: String
 ) {
+
+    /**
+     * 确定植物是否需要浇水，
+     * 如果 当前时间 > 上次浇水时间 + 浇水周期{@link waterInterval} 返回 true
+     * 否则 返回 false
+     */
+    fun shouldBeWatered(lastWateringDate: Calendar) =
+            Calendar.getInstance() > lastWateringDate.apply { add(Calendar.DAY_OF_YEAR, waterInterval) }
+
     override fun toString() = name
 }
