@@ -1,12 +1,18 @@
 package com.touge.learnsunflower.data
 
 import android.content.Context
+import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.touge.learnsunflower.utilities.DATABASE_NAME
 import com.touge.learnsunflower.utilities.runOnIoThread
+import java.io.IOException
+import java.nio.charset.Charset
 
 /**
  * @Author Touge
@@ -38,26 +44,36 @@ abstract class AppDatabase : RoomDatabase() {
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            runOnIoThread { seedDatabase(getInstance(context)) }
+                            runOnIoThread { seedDatabase(context) }
                         }
                     })
                     .build()
         }
 
-        private fun seedDatabase(instance: AppDatabase) {
-            instance.plantDao().insertAll(ArrayList<Plant>(4).apply {
-                add(Plant("1", "Apple", "A red fruit", 1, 30,
-                        "https://upload.wikimedia.org/wikipedia/commons/5/55" +
-                                "/Apple_orchard_in_Tasmania.jpg"))
-                add(Plant("2", "Beet", "A red root vegetable", 2, 7,
-                        "https://static.pexels.com/photos/264101/pexels-photo-264101.jpeg"))
-                add(Plant("3", "Celery", "A green vegetable", 2, 2,
-                        "https://upload.wikimedia.org/wikipedia/commons/5/51" +
-                                "/A_scene_of_Coriander_leaves.JPG"))
-                add(Plant("4", "Tomato", "A red vegetable", 3, 4,
-                        "https://upload.wikimedia.org/wikipedia/commons/1/17" +
-                                "/Cherry_tomatoes_red_and_green_2009_16x9.jpg"))
-            })
+        private fun seedDatabase(context: Context) {
+            val plantType = object : TypeToken<List<Plant>>() {}.type
+            val plants: List<Plant> = Gson().fromJson(readJson(context), plantType)
+            val database = getInstance(context)
+            database.plantDao().insertAll(plants)
+        }
+
+        @VisibleForTesting
+        private fun readJson(
+                context: Context,
+                fileName: String = "plants.json"): String {
+            return try {
+                val inputStream = context.assets.open(fileName)
+                val buffer = ByteArray(inputStream.available())
+                inputStream.run {
+                    read(buffer)
+                    close()
+                }
+                String(buffer, Charset.defaultCharset())
+            } catch (e: IOException) {
+                Log.e("AppDatabase", "read 'plants.json' error $e")
+                ""
+            }
+
         }
 
     }
