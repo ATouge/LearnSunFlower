@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".PlantListActivity"
+            android:name=".GardenActivity"
+            android:label="@string/my_garden"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +20,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".PlantListActivity"
+            android:parentActivityName=".GardenActivity"
+            android:label="@string/title_plant_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".PlantDetailActivity"
+            android:parentActivityName=".PlantListActivity"
+            android:label="@string/title_plant_detail"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.INTERNET" />
