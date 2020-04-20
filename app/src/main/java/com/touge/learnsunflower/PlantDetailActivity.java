@@ -7,12 +7,16 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.touge.learnsunflower.databinding.ActivityPlantDetailBinding;
+import com.touge.learnsunflower.utilities.InjectorUtils;
+import com.touge.learnsunflower.viewmodel.PlantDetailViewModel;
+import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * @Author Touge
@@ -24,8 +28,17 @@ public class PlantDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String plantId = getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID);
+        PlantDetailViewModelFactory factory = InjectorUtils
+                .providePlantDetailViewModelFactory(getApplication(), plantId);
+        PlantDetailViewModel viewModel = new ViewModelProvider(this, factory)
+                .get(PlantDetailViewModel.class);
+
         ActivityPlantDetailBinding binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_plant_detail);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(viewModel);
 
         setSupportActionBar(binding.detailToolbar);
 
@@ -44,8 +57,7 @@ public class PlantDetailActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            String plantId = getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID);
-            PlantDetailFragment fragment =PlantDetailFragment.newInstance(plantId);
+            PlantDetailFragment fragment = PlantDetailFragment.newInstance(plantId);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.plant_detail_container, fragment)
                     .commit();
