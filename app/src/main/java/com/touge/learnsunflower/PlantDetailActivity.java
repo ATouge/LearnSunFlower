@@ -3,13 +3,6 @@ package com.touge.learnsunflower;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.touge.learnsunflower.databinding.ActivityPlantDetailBinding;
-import com.touge.learnsunflower.utilities.InjectorUtils;
-import com.touge.learnsunflower.viewmodel.PlantDetailViewModel;
-import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +10,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.touge.learnsunflower.databinding.ActivityPlantDetailBinding;
+import com.touge.learnsunflower.utilities.InjectorUtils;
+import com.touge.learnsunflower.viewmodel.PlantDetailViewModel;
+import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory;
 
 /**
  * @Author Touge
@@ -31,7 +30,7 @@ public class PlantDetailActivity extends AppCompatActivity {
 
         String plantId = getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID);
         PlantDetailViewModelFactory factory = InjectorUtils
-                .providePlantDetailViewModelFactory(getApplication(), plantId);
+                .providePlantDetailViewModelFactory(this, plantId);
         PlantDetailViewModel viewModel = new ViewModelProvider(this, factory)
                 .get(PlantDetailViewModel.class);
 
@@ -42,12 +41,9 @@ public class PlantDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.detailToolbar);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "TODO: Add plant to my garden", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        binding.fab.setOnClickListener(view -> {
+            viewModel.addPlantToGarden();
+            Snackbar.make(view, R.string.added_plant_to_garden, Snackbar.LENGTH_LONG).show();
         });
 
         // Show the Up button in the action bar.

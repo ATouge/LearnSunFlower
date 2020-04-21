@@ -1,10 +1,11 @@
 package com.touge.learnsunflower.viewmodel;
 
-import com.touge.learnsunflower.data.PlantRepository;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.touge.learnsunflower.data.GardenPlantingRepository;
+import com.touge.learnsunflower.data.PlantRepository;
 
 /**
  * @Author Touge
@@ -17,9 +18,14 @@ public class PlantDetailViewModelFactory extends ViewModelProvider.NewInstanceFa
     private final PlantRepository mPlantRepository;
 
     @NonNull
+    private final GardenPlantingRepository mGardenPlantingRepository;
+
+    @NonNull
     private final String plantId;
 
-    public PlantDetailViewModelFactory(@NonNull PlantRepository plantRepository, @NonNull String plantId) {
+    public PlantDetailViewModelFactory(@NonNull PlantRepository plantRepository,
+                                       @NonNull GardenPlantingRepository gardenPlantingRepository, @NonNull String plantId) {
+        mGardenPlantingRepository = gardenPlantingRepository;
         mPlantRepository = plantRepository;
         this.plantId = plantId;
     }
@@ -27,6 +33,6 @@ public class PlantDetailViewModelFactory extends ViewModelProvider.NewInstanceFa
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new PlantDetailViewModel(mPlantRepository, plantId);
+        return (T) new PlantDetailViewModel(mPlantRepository, mGardenPlantingRepository, plantId);
     }
 }

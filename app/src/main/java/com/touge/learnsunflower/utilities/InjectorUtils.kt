@@ -1,7 +1,8 @@
 package com.touge.learnsunflower.utilities
 
-import android.app.Application
+import android.content.Context
 import com.touge.learnsunflower.data.AppDatabase
+import com.touge.learnsunflower.data.GardenPlantingRepository
 import com.touge.learnsunflower.data.PlantRepository
 import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory
 import com.touge.learnsunflower.viewmodel.PlantListViewModelFactory
@@ -12,20 +13,26 @@ import com.touge.learnsunflower.viewmodel.PlantListViewModelFactory
  * @Description 静态类：提供 ViewModelFactory
  */
 object InjectorUtils {
-    private fun provideRepository(application: Application):PlantRepository {
-        return PlantRepository.getInstance(AppDatabase.getInstance(application).plantDao())
+
+    private fun getPlantRepository(context: Context): PlantRepository {
+        return PlantRepository.getInstance(AppDatabase.getInstance(context).plantDao())
+    }
+
+    private fun getGardenPlantingRepository(context: Context): GardenPlantingRepository {
+        return GardenPlantingRepository.getInstance(
+                AppDatabase.getInstance(context).gardenPlantingDao())
     }
 
     @JvmStatic
-    fun providePlantListViewModelFactory(application: Application): PlantListViewModelFactory {
-        val repository = provideRepository(application)
+    fun providePlantListViewModelFactory(context: Context): PlantListViewModelFactory {
+        val repository = getPlantRepository(context)
         return PlantListViewModelFactory(repository)
     }
 
     @JvmStatic
-    fun providePlantDetailViewModelFactory(application: Application, plantId: String): PlantDetailViewModelFactory {
-        val repository = provideRepository(application)
-        return PlantDetailViewModelFactory(repository, plantId)
+    fun providePlantDetailViewModelFactory(context: Context, plantId: String): PlantDetailViewModelFactory {
+        return PlantDetailViewModelFactory(getPlantRepository(context),
+                getGardenPlantingRepository(context), plantId)
     }
 
 }
