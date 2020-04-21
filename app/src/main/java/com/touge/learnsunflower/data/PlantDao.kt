@@ -14,7 +14,7 @@ import androidx.room.Query
 @Dao
 interface PlantDao {
 
-    @Query("SELECT * FROM plants")
+    @Query("SELECT * FROM plants ORDER BY name")
     fun getPlants(): LiveData<List<Plant>>
 
     @Query("SELECT * FROM plants WHERE id = :plantId")
@@ -23,7 +23,7 @@ interface PlantDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(plants: List<Plant>)
 
-    @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber")
+    @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
     fun getPlantWithGrowZoneNumber(growZoneNumber: Int): LiveData<List<Plant>>
 
 }
