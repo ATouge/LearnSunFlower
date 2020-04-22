@@ -6,16 +6,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.touge.learnsunflower.databinding.ActivityPlantDetailBinding;
-import com.touge.learnsunflower.utilities.InjectorUtils;
-import com.touge.learnsunflower.viewmodel.PlantDetailViewModel;
-import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory;
 
 /**
  * @Author Touge
@@ -27,32 +18,10 @@ public class PlantDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        String plantId = getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID);
-        PlantDetailViewModelFactory factory = InjectorUtils
-                .providePlantDetailViewModelFactory(this, plantId);
-        PlantDetailViewModel viewModel = new ViewModelProvider(this, factory)
-                .get(PlantDetailViewModel.class);
-
-        ActivityPlantDetailBinding binding = DataBindingUtil.setContentView(this,
-                R.layout.activity_plant_detail);
-        binding.setLifecycleOwner(this);
-        binding.setViewModel(viewModel);
-
-        setSupportActionBar(binding.detailToolbar);
-
-        binding.fab.setOnClickListener(view -> {
-            viewModel.addPlantToGarden();
-            Snackbar.make(view, R.string.added_plant_to_garden, Snackbar.LENGTH_LONG).show();
-        });
-
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setContentView(R.layout.activity_plant_detail);
 
         if (savedInstanceState == null) {
+            String plantId = getIntent().getStringExtra(PlantDetailFragment.ARG_ITEM_ID);
             PlantDetailFragment fragment = PlantDetailFragment.newInstance(plantId);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.plant_detail_container, fragment)
