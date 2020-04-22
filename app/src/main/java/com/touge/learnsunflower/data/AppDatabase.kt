@@ -33,13 +33,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): AppDatabase {
             return instance ?: synchronized(this) {
-                instance ?: deleteAndBuildDatabase(context).also { instance = it }
+                instance ?: buildDatabase(context).also { instance = it }
             }
-        }
-
-        private fun deleteAndBuildDatabase(context: Context): AppDatabase {
-            context.deleteDatabase(DATABASE_NAME)
-            return buildDatabase(context)
         }
 
         private fun buildDatabase(context: Context): AppDatabase {
