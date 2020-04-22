@@ -22,6 +22,7 @@ buildscript {
         databindingVersion = '3.1.4'
         glideVersion = '4.11.0'
         gsonVersion = '2.8.6'
+        navigationVersion = '1.0.0'
     }
 
     repositories {
@@ -31,6 +32,7 @@ buildscript {
         google()
 //        jcenter()
 
+//        flatDir { dirs "$nav_repo_loaction" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
