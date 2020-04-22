@@ -22,7 +22,7 @@ buildscript {
         databindingVersion = '3.1.4'
         glideVersion = '4.11.0'
         gsonVersion = '2.8.6'
-        navigationVersion = '1.0.0'
+        navigationVersion = '2.2.2'
     }
 
     repositories {
