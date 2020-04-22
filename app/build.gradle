@@ -49,6 +49,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
 
     // life-cycle
     implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
