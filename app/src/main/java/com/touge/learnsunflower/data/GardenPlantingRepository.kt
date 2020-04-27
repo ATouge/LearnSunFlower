@@ -24,7 +24,6 @@ class GardenPlantingRepository private constructor(
         @Volatile
         private var instance: GardenPlantingRepository? = null
 
-        @JvmStatic
         fun getInstance(gardenPlantingDao: GardenPlantingDao) =
                 instance ?: synchronized(this) {
                     instance ?: GardenPlantingRepository(gardenPlantingDao).also { instance = it }

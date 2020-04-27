@@ -19,7 +19,6 @@ class PlantRepository private constructor(private val plantDao: PlantDao) {
         @Volatile
         private var instance: PlantRepository? = null
 
-        @JvmStatic
         fun getInstance(plantDao: PlantDao): PlantRepository {
             return instance ?: synchronized(this) {
                 instance ?: PlantRepository(plantDao).also { instance = it }

@@ -1,6 +1,3 @@
-@file:JvmName("Constants")
-@file:Suppress("PropertyName")
-
 package com.touge.learnsunflower.utilities
 
 /**
@@ -9,6 +6,5 @@ package com.touge.learnsunflower.utilities
  * @Description 常量值
  *
  */
-@JvmField
-val DATABASE_NAME = "sunflower-db"
+const val DATABASE_NAME = "sunflower-db"
 

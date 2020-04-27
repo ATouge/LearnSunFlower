@@ -23,13 +23,11 @@ object InjectorUtils {
                 AppDatabase.getInstance(context).gardenPlantingDao())
     }
 
-    @JvmStatic
     fun providePlantListViewModelFactory(context: Context): PlantListViewModelFactory {
         val repository = getPlantRepository(context)
         return PlantListViewModelFactory(repository)
     }
 
-    @JvmStatic
     fun providePlantDetailViewModelFactory(context: Context, plantId: String): PlantDetailViewModelFactory {
         return PlantDetailViewModelFactory(getPlantRepository(context),
                 getGardenPlantingRepository(context), plantId)
