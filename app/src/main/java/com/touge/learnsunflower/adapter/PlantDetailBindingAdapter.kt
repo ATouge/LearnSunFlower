@@ -16,7 +16,7 @@ import com.touge.learnsunflower.R
  * @Date 2020/4/20 20:33
  * @Description
  */
-@BindingAdapter("app:imageFromUrl")
+@BindingAdapter("imageFromUrl")
 fun imageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         Glide.with(view)
@@ -26,12 +26,12 @@ fun imageFromUrl(view: ImageView, imageUrl: String?) {
     }
 }
 
-@BindingAdapter("app:goneIf")
+@BindingAdapter("goneIf")
 fun goneIf(view: View, isGone: Boolean) {
     view.visibility = if (isGone) View.GONE else View.VISIBLE
 }
 
-@BindingAdapter("app:wateringText")
+@BindingAdapter("wateringText")
 fun wateringText(textView: TextView, waterInterval: Int) {
     val resources = textView.context.resources
     val quantityString = resources.getQuantityString(R.plurals.watering_needs_suffix,

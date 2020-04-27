@@ -16,8 +16,8 @@
             android:id="@+id/plant_list"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/recyclerview_margin"
-            android:layout_marginEnd="@dimen/recyclerview_margin"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <FrameLayout
