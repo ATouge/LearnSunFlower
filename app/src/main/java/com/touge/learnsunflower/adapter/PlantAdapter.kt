@@ -4,8 +4,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.touge.learnsunflower.PlantDetailActivity
 import com.touge.learnsunflower.PlantDetailFragment
 import com.touge.learnsunflower.PlantListActivity
@@ -54,7 +57,10 @@ class PlantAdapter(plantListActivity: PlantListActivity,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            idView.text = values[position].plantId
+            Glide.with(imageView.context)
+                    .load(values[position].imageUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageView)
             contentView.text = values[position].name
             with(itemView) {
                 tag = values[position]
@@ -64,8 +70,8 @@ class PlantAdapter(plantListActivity: PlantListActivity,
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val idView: TextView = itemView.findViewById(R.id.id_text)
-        val contentView: TextView = itemView.findViewById(R.id.content)
+        val imageView: ImageView = itemView.findViewById(R.id.plant_item_image)
+        val contentView: TextView = itemView.findViewById(R.id.plant_item_title)
     }
 
 }
