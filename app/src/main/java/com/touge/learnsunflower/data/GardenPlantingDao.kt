@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 
 /**
  * @Author Touge
@@ -21,6 +22,10 @@ interface GardenPlantingDao {
 
     @Query("SELECT * FROM garden_plantings WHERE plant_id =:plantId")
     fun getGardenPlantingForPlant(plantId: String): LiveData<GardenPlanting>
+
+    @Transaction
+    @Query("SELECT * FROM plants")
+    fun getPlantWithGardenPlantings(): LiveData<List<PlantAndGardenPlantings>>
 
     @Insert
     fun insertGardenPlanting(gardenPlanting: GardenPlanting)
