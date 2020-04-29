@@ -1,12 +1,13 @@
 package com.touge.learnsunflower
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
 
 /**
@@ -18,10 +19,12 @@ class GardenActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_garden)
+        navController = Navigation.findNavController(this, R.id.garden_nav_fragment)
         setupToolbar()
         setupNavigationDrawer()
     }
@@ -47,8 +50,8 @@ class GardenActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.my_garden_navigation_menu_item -> Unit
-                R.id.plant_list_navigation_menu_item -> {
-                    startActivity(Intent(this@GardenActivity, PlantListActivity::class.java))
+                R.id.plant_list_activity -> {
+                    navController.navigate(R.id.action_garden_fragment_to_plant_list_activity)
                 }
                 else -> Unit
             }
