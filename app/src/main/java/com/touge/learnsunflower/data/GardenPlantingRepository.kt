@@ -20,6 +20,12 @@ class GardenPlantingRepository private constructor(
     fun getGardenPlantingForPlant(plantId: String) =
             gardenPlantingDao.getGardenPlantingForPlant(plantId)
 
+    fun getGardenPlantings() =
+            gardenPlantingDao.getGardenPlantings()
+
+    fun getPlantGardenPlantings() =
+            gardenPlantingDao.getPlantAndGardenPlantings()
+
     companion object {
         @Volatile
         private var instance: GardenPlantingRepository? = null

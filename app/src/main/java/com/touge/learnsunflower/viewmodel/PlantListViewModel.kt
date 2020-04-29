@@ -13,10 +13,11 @@ import com.touge.learnsunflower.data.PlantRepository
  * @Description ViewModel
  *
  */
-class PlantListViewModel internal constructor(plantRepository: PlantRepository) : ViewModel() {
+class PlantListViewModel internal constructor(
+        private val plantRepository: PlantRepository
+) : ViewModel() {
 
     private val NO_GROW_ZONE = -1
-    private val plantRepository: PlantRepository = plantRepository
     private val growZoneNumber: MutableLiveData<Int> = MutableLiveData()
 
     init {

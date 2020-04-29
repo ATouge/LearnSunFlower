@@ -25,7 +25,7 @@ interface GardenPlantingDao {
 
     @Transaction
     @Query("SELECT * FROM plants")
-    fun getPlantWithGardenPlantings(): LiveData<List<PlantAndGardenPlantings>>
+    fun getPlantAndGardenPlantings(): LiveData<List<PlantAndGardenPlantings>>
 
     @Insert
     fun insertGardenPlanting(gardenPlanting: GardenPlanting)

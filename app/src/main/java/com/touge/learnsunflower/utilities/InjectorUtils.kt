@@ -4,6 +4,7 @@ import android.content.Context
 import com.touge.learnsunflower.data.AppDatabase
 import com.touge.learnsunflower.data.GardenPlantingRepository
 import com.touge.learnsunflower.data.PlantRepository
+import com.touge.learnsunflower.viewmodel.GardenPlantingListViewModelFactory
 import com.touge.learnsunflower.viewmodel.PlantDetailViewModelFactory
 import com.touge.learnsunflower.viewmodel.PlantListViewModelFactory
 
@@ -31,6 +32,11 @@ object InjectorUtils {
     fun providePlantDetailViewModelFactory(context: Context, plantId: String): PlantDetailViewModelFactory {
         return PlantDetailViewModelFactory(getPlantRepository(context),
                 getGardenPlantingRepository(context), plantId)
+    }
+
+    fun provideGardenPlantingListViewModelFactory(context: Context): GardenPlantingListViewModelFactory {
+        val gardenPlantingRepository = getGardenPlantingRepository(context)
+        return GardenPlantingListViewModelFactory(gardenPlantingRepository)
     }
 
 }
