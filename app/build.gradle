@@ -79,5 +79,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-common-ktx:$rootProject.navigationVersion"
     implementation "android.arch.navigation:navigation-runtime:$rootProject.navigationVersion"
     implementation "android.arch.navigation:navigation-runtime-ktx:$rootProject.navigationVersion"
+    // work
+    implementation "android.arch.work:work-runtime:$rootProject.workVersion"
 
 }

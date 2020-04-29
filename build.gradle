@@ -23,6 +23,7 @@ buildscript {
         glideVersion = '4.11.0'
         gsonVersion = '2.8.6'
         navigationVersion = '2.2.2'
+        workVersion = '1.0.1'
     }
 
     repositories {
