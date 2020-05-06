@@ -71,15 +71,9 @@ dependencies {
     // Gson
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
     // Navigation
-    implementation "android.arch.navigation:navigation-ui:$rootProject.navigationVersion"
     implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    implementation "android.arch.navigation:navigation-fragment:$rootProject.navigationVersion"
     implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
-    implementation "android.arch.navigation:navigation-common:$rootProject.navigationVersion"
-    implementation "android.arch.navigation:navigation-common-ktx:$rootProject.navigationVersion"
-    implementation "android.arch.navigation:navigation-runtime:$rootProject.navigationVersion"
-    implementation "android.arch.navigation:navigation-runtime-ktx:$rootProject.navigationVersion"
     // work
-    implementation "android.arch.work:work-runtime:$rootProject.workVersion"
+    implementation "android.arch.work:work-runtime-ktx:$rootProject.workVersion"
 
 }
