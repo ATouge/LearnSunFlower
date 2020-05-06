@@ -1,8 +1,6 @@
 package com.touge.learnsunflower.data
 
 import android.content.Context
-import android.util.Log
-import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -11,9 +9,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.touge.learnsunflower.utilities.DATABASE_NAME
+import com.touge.learnsunflower.utilities.readJson
 import com.touge.learnsunflower.utilities.runOnIoThread
-import java.io.IOException
-import java.nio.charset.Charset
 
 /**
  * @Author Touge
@@ -54,26 +51,5 @@ abstract class AppDatabase : RoomDatabase() {
             val database = getInstance(context)
             database.plantDao().insertAll(plants)
         }
-
-        @VisibleForTesting
-        private fun readJson(
-                context: Context,
-                fileName: String = "plants.json"): String {
-            return try {
-                val inputStream = context.assets.open(fileName)
-                val buffer = ByteArray(inputStream.available())
-                inputStream.run {
-                    read(buffer)
-                    close()
-                }
-                String(buffer, Charset.defaultCharset())
-            } catch (e: IOException) {
-                Log.e("AppDatabase", "read 'plants.json' error $e")
-                ""
-            }
-
-        }
-
     }
-
 }
