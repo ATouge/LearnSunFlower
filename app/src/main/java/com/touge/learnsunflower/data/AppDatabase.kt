@@ -6,11 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.touge.learnsunflower.utilities.DATABASE_NAME
 import com.touge.learnsunflower.utilities.readJson
-import com.touge.learnsunflower.utilities.runOnIoThread
+import com.touge.learnsunflower.worker.SeedDatabaseWorker
 
 /**
  * @Author Touge
@@ -39,17 +41,14 @@ abstract class AppDatabase : RoomDatabase() {
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            runOnIoThread { seedDatabase(context) }
+                            val seedRequest = OneTimeWorkRequest.Builder(
+                                    SeedDatabaseWorker::class.java
+                            ).build()
+                            WorkManager.getInstance().enqueue(seedRequest)
                         }
                     })
                     .build()
         }
 
-        private fun seedDatabase(context: Context) {
-            val plantType = object : TypeToken<List<Plant>>() {}.type
-            val plants: List<Plant> = Gson().fromJson(readJson(context), plantType)
-            val database = getInstance(context)
-            database.plantDao().insertAll(plants)
-        }
     }
 }
