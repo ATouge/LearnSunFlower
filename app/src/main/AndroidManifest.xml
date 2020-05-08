@@ -20,14 +20,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PlantListActivity"
-            android:parentActivityName=".GardenActivity"
-            android:label="@string/title_plant_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".PlantDetailActivity"
-            android:parentActivityName=".PlantListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".GardenActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GardenActivity" />
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

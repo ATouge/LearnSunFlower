@@ -1,14 +1,17 @@
 package com.touge.learnsunflower
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.touge.learnsunflower.adapter.PlantAdapter
-import com.touge.learnsunflower.databinding.ActivityPlantListBinding
 import com.touge.learnsunflower.utilities.InjectorUtils
 import com.touge.learnsunflower.viewmodel.PlantListViewModel
 
@@ -17,39 +20,30 @@ import com.touge.learnsunflower.viewmodel.PlantListViewModel
  * @Date 2020/4/8 21:19
  * @Description
  */
-class PlantListActivity : AppCompatActivity() {
+class PlantListFragment : Fragment() {
 
-    private var isTwoPone: Boolean = false
-
-    private lateinit var binding: ActivityPlantListBinding
 
     private lateinit var viewModel: PlantListViewModel
 
     private var arePlantsFiltered = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-                this, R.layout.activity_plant_list
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_plant_list,
+                container, false
         )
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.run {
-            toolbar.title = title
-        }
+        val context = context ?: return view
 
-        val adapter = PlantAdapter()
-        binding.plantListFrame.plantList.adapter = adapter
-
-        val factory = InjectorUtils.providePlantListViewModelFactory(this)
+        val factory = InjectorUtils.providePlantListViewModelFactory(context)
         viewModel = ViewModelProvider(this, factory).get(PlantListViewModel::class.java)
+        val adapter = PlantAdapter()
+        view.findViewById<RecyclerView>(R.id.plant_list).adapter = adapter
         subscribeUi(adapter)
-
+        setHasOptionsMenu(true)
+        return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_plant_list, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater?.inflate(R.menu.menu_plant_list, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

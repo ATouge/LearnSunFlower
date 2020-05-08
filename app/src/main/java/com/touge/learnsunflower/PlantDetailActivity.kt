@@ -28,7 +28,7 @@ class PlantDetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == android.R.id.home) {
-            navigateUpTo(Intent(this, PlantListActivity::class.java))
+            navigateUpTo(Intent(this, GardenActivity::class.java))
             return true
         }
 

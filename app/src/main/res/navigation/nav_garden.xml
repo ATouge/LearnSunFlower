@@ -5,22 +5,17 @@
     android:id="@+id/nav_garden"
     app:startDestination="@id/garden_fragment">
 
-    <activity
-        android:id="@+id/plant_list_activity"
-        android:name="com.touge.learnsunflower.PlantListActivity"
-        tools:layout="@layout/activity_plant_list" />
 
     <fragment
         android:id="@+id/garden_fragment"
-        android:name="com.touge.learnsunflower.GardenFragment">
+        android:name="com.touge.learnsunflower.GardenFragment"
+        tools:layout="@layout/fragment_garden" />
 
-        <action
-            android:id="@+id/action_garden_fragment_to_plant_list_activity"
-            app:destination="@id/plant_list_activity"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"
-            app:exitAnim="@anim/nav_default_pop_exit_anim" />
 
-    </fragment>
+    <fragment
+        android:id="@+id/plant_list_fragment"
+        android:name="com.touge.learnsunflower.PlantListFragment"
+        tools:layout="@layout/fragment_garden" />
 
 
 </navigation>
