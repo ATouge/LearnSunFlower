@@ -6,9 +6,10 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
 import com.touge.learnsunflower.data.AppDatabase
 import com.touge.learnsunflower.data.Plant
-import com.touge.learnsunflower.utilities.readJson
+import com.touge.learnsunflower.utilities.PLANT_DATA_FILE_NAME
 
 /**
  * @Author Touge
@@ -22,8 +23,11 @@ class SeedDatabaseWorker(appContext: Context, workerParameters: WorkerParameters
 
     override fun doWork(): Result {
         val plantType = object : TypeToken<List<Plant>>() {}.type
+        var jsonReader: JsonReader? = null
         return try {
-            val plantList: List<Plant> = Gson().fromJson(readJson(applicationContext), plantType)
+            val inputStream = applicationContext.assets.open(PLANT_DATA_FILE_NAME)
+            jsonReader = JsonReader(inputStream.reader())
+            val plantList: List<Plant> = Gson().fromJson(jsonReader, plantType)
             val database = AppDatabase.getInstance(applicationContext)
             database.plantDao().insertAll(plantList)
             Result.success()

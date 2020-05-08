@@ -7,4 +7,5 @@ package com.touge.learnsunflower.utilities
  *
  */
 const val DATABASE_NAME = "sunflower-db"
+const val PLANT_DATA_FILE_NAME = "plants.json"
 
