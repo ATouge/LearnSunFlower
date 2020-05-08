@@ -23,8 +23,6 @@ class PlantListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlantListBinding
 
-    private lateinit var adapter: PlantAdapter
-
     private lateinit var viewModel: PlantListViewModel
 
     private var arePlantsFiltered = false
@@ -40,17 +38,12 @@ class PlantListActivity : AppCompatActivity() {
             toolbar.title = title
         }
 
-        if (binding.plantListFrame.plantDetailContainer != null) {
-
-            isTwoPone = true
-        }
-
-        adapter = PlantAdapter(this, isTwoPone)
-        binding.plantListFrame?.plantList?.adapter = adapter
+        val adapter = PlantAdapter()
+        binding.plantListFrame.plantList.adapter = adapter
 
         val factory = InjectorUtils.providePlantListViewModelFactory(this)
         viewModel = ViewModelProvider(this, factory).get(PlantListViewModel::class.java)
-        subscribeUi()
+        subscribeUi(adapter)
 
     }
 
@@ -77,7 +70,7 @@ class PlantListActivity : AppCompatActivity() {
         }
     }
 
-    private fun subscribeUi() {
+    private fun subscribeUi(adapter: PlantAdapter) {
         viewModel.getPlants().observe(this, Observer { plants ->
             if (plants != null) {
                 adapter.values = plants

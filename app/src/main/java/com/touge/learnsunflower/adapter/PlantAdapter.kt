@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.touge.learnsunflower.PlantDetailActivity
 import com.touge.learnsunflower.PlantDetailFragment
-import com.touge.learnsunflower.PlantListActivity
 import com.touge.learnsunflower.R
 import com.touge.learnsunflower.data.Plant
 
@@ -20,8 +19,7 @@ import com.touge.learnsunflower.data.Plant
  * @Date 2020/4/8 21:31
  * @Description
  */
-class PlantAdapter(plantListActivity: PlantListActivity,
-                   isTwoPone: Boolean) : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
+class PlantAdapter : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
 
     var values: List<Plant> = ArrayList<Plant>(0)
         set(item) {
@@ -31,17 +29,10 @@ class PlantAdapter(plantListActivity: PlantListActivity,
 
     private var onClickListener = View.OnClickListener { view ->
         val item = view.tag as Plant
-        if (isTwoPone) {
-            val fragment = PlantDetailFragment.newInstance(item.plantId)
-            plantListActivity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.plant_detail_container, fragment)
-                    .commit()
-        } else {
-            val intent = Intent(view.context, PlantDetailActivity::class.java).apply {
-                putExtra(PlantDetailFragment.ARG_ITEM_ID, item.plantId)
-            }
-            view.context.startActivity(intent)
+        val intent = Intent(view.context, PlantDetailActivity::class.java).apply {
+            putExtra(PlantDetailFragment.ARG_ITEM_ID, item.plantId)
         }
+        view.context.startActivity(intent)
     }
 
 
