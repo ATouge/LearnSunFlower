@@ -1,7 +1,10 @@
 package com.touge.learnsunflower.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.touge.learnsunflower.data.GardenPlantingRepository
+import com.touge.learnsunflower.data.PlantAndGardenPlantings
 
 /**
  * @Author Touge
@@ -14,7 +17,11 @@ class GardenPlantingListViewModel internal constructor(
 
     fun getGardenPlantings() = gardenPlantingRepository.getGardenPlantings()
 
-    fun getPlantAndGardenPlantings() = gardenPlantingRepository.getPlantGardenPlantings()
+    fun getPlantAndGardenPlantings(): LiveData<List<PlantAndGardenPlantings>> {
+        return Transformations.map(gardenPlantingRepository.getPlantGardenPlantings()) { it ->
+            it.filter { it.gardenPlantings.isNotEmpty() }
+        }
+    }
 
 
 }

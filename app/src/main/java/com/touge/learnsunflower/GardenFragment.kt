@@ -52,7 +52,7 @@ class GardenFragment : Fragment() {
         })
         viewModel.getPlantAndGardenPlantings().observe(this, Observer { result ->
             if (result != null && result.isNotEmpty()) {
-                adapter.values = result.filter { it.gardenPlantings.isNotEmpty() }
+                adapter.values = result
             }
         })
     }
